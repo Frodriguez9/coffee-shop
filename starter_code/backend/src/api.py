@@ -21,6 +21,13 @@ CORS(app)
 '''
 db_drop_and_create_all()
 
+drink = Drink(
+    title='water',
+    recipe='[{"name": "water", "color": "blue", "parts": 1}]'
+    )
+
+drink.insert()
+
 '''
 @TODO implement endpoint
     GET /drinks
