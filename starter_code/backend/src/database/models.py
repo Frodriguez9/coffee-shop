@@ -7,6 +7,8 @@ database_filename = "database.db"
 project_dir = os.path.dirname(os.path.abspath(__file__))
 database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
 db = SQLAlchemy()
+print(project_dir)
+print(database_path)
 
 '''
 setup_db(app)
@@ -33,6 +35,9 @@ db_drop_and_create_all()
 def db_drop_and_create_all():
     db.drop_all()
     db.create_all()
+
+    ''' Comenting the below variables. Not sure why this is here from
+        the original code. I moved the demo creation to api.py '''
     # add one demo row which is helping in POSTMAN test
     #drink = Drink(
     #    title='water',

@@ -21,12 +21,15 @@ CORS(app)
 '''
 db_drop_and_create_all()
 
+# add one demo row which is helping in POSTMAN test
 drink = Drink(
     title='water',
     recipe='[{"name": "water", "color": "blue", "parts": 1}]'
     )
 
 drink.insert()
+
+
 
 '''
 @TODO implement endpoint
@@ -36,6 +39,16 @@ drink.insert()
     returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
         or appropriate status code indicating reason for failure
 '''
+@app.route('/drinks')
+def display_drinks():
+    drinks = Drink.query.all()
+    #TODO: IMPLEMENT AN ERROR.HANDELES here
+    menu = [drink.short() for drink in drinks]
+
+    return jsonify({
+        'success': True,
+        'drinks': menu
+    })
 
 
 '''
@@ -46,7 +59,17 @@ drink.insert()
     returns status code 200 and json {"success": True, "drinks": drinks} where drinks is the list of drinks
         or appropriate status code indicating reason for failure
 '''
+@app.route('/drinks-detail')
+@requires_auth('get:drinks-detail')
+def show_recipe():
+    # if token expired it provides a 500 error, but src.auth.auth.AuthError: ({'code': 'token_expired', 'description': 'Token expired.'}, 401)
+    menu = Drink.query.all()
+    drinks = [drink.long() for drink in menu]
 
+    return jsonify({
+        'success': True,
+        'drinks': drinks
+    })
 
 '''
 @TODO implement endpoint
@@ -110,10 +133,19 @@ def unprocessable(error):
 
 '''
 
+
 '''
 @TODO implement error handler for 404
     error handler should conform to general task above
 '''
+
+@app.errorhandler(404)
+def unprocessable(error):
+    return jsonify({
+        "success": False,
+        "error": 404,
+        "message": "resource not found"
+    }), 404
 
 
 '''
