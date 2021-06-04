@@ -9,6 +9,6 @@ export const environment = {
     url: 'nandodev.us', // the auth0 domain prefix
     audience: 'drinks', // the audience set for the auth0 app
     clientId: 'AMImnZztiD6cTj0JHGJTCbB9uPEVmtrQ', // the client id generated for the auth0 app
-    callbackURL: 'http://localhost:8100' //'http://localhost:8100', // the base url of the running ionic application.
+    callbackURL: 'http://127.0.0.1:8100' //'http://localhost:8100', // the base url of the running ionic application.
   }
 };

@@ -5,7 +5,8 @@ import json
 
 database_filename = "database.db"
 project_dir = os.path.dirname(os.path.abspath(__file__))
-database_path = "sqlite:///{}".format(os.path.join(project_dir, database_filename))
+database_path = "sqlite:///{}".format(
+                                os.path.join(project_dir, database_filename))
 db = SQLAlchemy()
 
 '''
@@ -25,9 +26,9 @@ def setup_db(app):
 db_drop_and_create_all()
     drops the database tables and starts fresh
     can be used to initialize a clean database
-    !!NOTE you can change the database_filename variable to have multiple verisons of a database
+    !!NOTE you can change the database_filename
+    variable to have multiple verisons of a database
 '''
-
 
 
 def db_drop_and_create_all():
@@ -37,13 +38,14 @@ def db_drop_and_create_all():
     ''' Comenting the below variables. Not sure why this is here from
         the original code. I moved the demo creation to api.py '''
     # add one demo row which is helping in POSTMAN test
-    #drink = Drink(
+    # drink = Drink(
     #    title='water',
     #    recipe='[{"name": "water", "color": "blue", "parts": 1}]'
     # )
 
-#drink.insert()
+# drink.insert()
 # ROUTES
+
 
 '''
 Drink
@@ -57,7 +59,8 @@ class Drink(db.Model):
     # String Title
     title = Column(String(80), unique=True)
     # the ingredients blob - this stores a lazy json blob
-    # the required datatype is [{'color': string, 'name':string, 'parts':number}]
+    # the required datatype is:
+    #        [{'color': string, 'name':string, 'parts':number}]
     recipe = Column(String(180), nullable=False)
 
     '''
@@ -67,7 +70,8 @@ class Drink(db.Model):
 
     def short(self):
         print(json.loads(self.recipe))
-        short_recipe = [{'color': r['color'], 'parts': r['parts']} for r in json.loads(self.recipe)]
+        short_recipe = [{'color': r['color'], 'parts': r['parts']}
+                        for r in json.loads(self.recipe)]
         return {
             'id': self.id,
             'title': self.title,
